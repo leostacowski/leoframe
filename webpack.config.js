@@ -1,4 +1,6 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const JsDocPlugin = require('jsdoc-webpack-plugin')
 
 module.exports = {
   module: {
@@ -23,9 +25,16 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+    }),
+    new JsDocPlugin({
+      conf: 'jsdoc.conf.json',
+      cwd: '.',
+      preserveTmpFile: false,
+      recursive: false,
     }),
   ],
 }

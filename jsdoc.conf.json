@@ -1,0 +1,14 @@
+{
+  "source": {
+    "include": ["./src/"],
+    "exclude": ["node_modules/", "dist/"],
+    "includePattern": ".*.js$"
+  },
+  "opts": {
+    "encoding": "utf8",
+    "package": "./package.json",
+    "readme": "./README.md",
+    "recurse": true,
+    "destination": "dist/doc"
+  }
+}
