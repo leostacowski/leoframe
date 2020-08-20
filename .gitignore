@@ -1,5 +1,9 @@
 .DS_Store
+
+# installed modules folder
 node_modules
+
+# webpack dist folder
 dist
 
 # local env files
