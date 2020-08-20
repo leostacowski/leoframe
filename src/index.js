@@ -1,5 +1,5 @@
-import Leo from './leojs/core'
-import Router from './leojs/router'
+import Leo from './leoframe/core'
+import Router from './leoframe/router'
 import Routes from './routes'
 
 new Leo({

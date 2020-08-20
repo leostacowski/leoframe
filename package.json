@@ -1,8 +1,8 @@
 {
-  "name": "leojs",
+  "name": "leoframe",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/leostacowski/leojs.git",
+  "repository": "https://github.com/leostacowski/leoframe.git",
   "author": "Leonardo RS <leonardo.stacowski@hotmail.com>",
   "license": "MIT",
   "scripts": {
