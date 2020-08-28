@@ -16,7 +16,11 @@ import Routes from './routes'
 // rootElement.appendChild(template.content)
 
 window.leo = new Leo({
+  id: 'leo',
   router: new Router(Routes),
-}).begin('leo')
+})
 
-console.log(leo)
+console.log(location)
+
+// const component = leo.router.getComponentObjectByName('Home')
+// leo.rootElement.innerHtml = component.component
