@@ -20,7 +20,4 @@ window.leo = new Leo({
   router: new Router(Routes),
 })
 
-console.log(location)
-
-// const component = leo.router.getComponentObjectByName('Home')
 // leo.rootElement.innerHtml = component.component

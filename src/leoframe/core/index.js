@@ -1,5 +1,5 @@
 /**
- * Representa o framework e executa a função init().
+ * Representa o framework e executa a função init.
  * @module Leo
  * @param initProps {Object} initProps - Objeto literal contendo as propriedades id e router.
  * @property {Integer} id Identificador do elemento HTML raíz da SPA.
@@ -26,7 +26,7 @@ export default class Leo {
   init() {
     try {
       this.setRootElement()
-      this.setRouterListenerHandler()
+      this.setRouterListenersHandlers()
     } catch (err) {
       console.error(`@init: ${err}`)
     }
@@ -47,59 +47,50 @@ export default class Leo {
   }
 
   /**
-   * Inicializa o handler do evento onChangeRoute do Router.
-   * @function setRouterListenerHandler
+   * Inicializa os callbacks do eventos onChangeRoute e onFirstLoad do Router.
+   * @function setRouterListenersHandlers
    * @returns {undefined}
    */
-  setRouterListenerHandler() {
+  setRouterListenersHandlers() {
     const self = this
 
-    this.router.onRouteChange(() => {
+    this.router.onFirstLoad((targetComponent) => {
       try {
-        const currentPath = self.router.getCurrentRoutePath()
-        const targetComponent = self.router.getComponentByPath(currentPath)
-
-        if (!targetComponent) throw `Route '${currentPath} not found!'`
-
-        if (!self.isComponentActive(targetComponent.name))
-          self.setActiveComponent(targetComponent)
+        self.renderComponent(targetComponent)
+        self.setActiveComponent(targetComponent)
       } catch (err) {
-        console.error(`@setRouterListeners: ${err}`)
+        console.error(`@onFirstLoadListenerHandler: ${err}`)
+      }
+    })
+
+    this.router.onRouteChange((targetComponent) => {
+      try {
+        self.renderComponent(targetComponent)
+        self.setActiveComponent(targetComponent)
+      } catch (err) {
+        console.error(`@onRouteChangeListenerHandler: ${err}`)
       }
     })
   }
 
   /**
-   * Verifica se o componente com o nome informado está ativo.
-   * @function isComponentActive
-   * @param name {String} name - Nome do componente.
-   * @returns {boolean}
-   */
-  isComponentActive(name) {
-    return this.activeComponent ? this.activeComponent.name === name : false
-  }
-
-  /**
    * Atribui na variável activeComponent um componente por nome ou objeto.
    * @function setActiveComponent
-   * @param target {String | Object} target - Nome ou objeto do componente.
+   * @param targetComponent {String | Object} target - Nome ou objeto do componente.
    * @returns {boolean}
    */
-  setActiveComponent(target) {
+  setActiveComponent(targetComponent) {
     try {
-      if (typeof target === 'string')
-        target = this.router.getComponentByName(target)
+      if (typeof targetComponent === 'string')
+        targetComponent = this.router.getComponentByName(targetComponent)
 
-      if (!target) throw `Component '${target}' not found!`
+      if (!targetComponent) throw `Component not found!`
 
-      if (!this.isComponentActive(target.name)) {
-        this.activeComponent = target
-        this.renderActiveComponent()
-      }
+      this.activeComponent = targetComponent
     } catch (err) {
       console.error(`@setActiveComponent: ${err}`)
     }
   }
 
-  renderActiveComponent() {}
+  renderComponent(targetComponent) {}
 }

@@ -1,4 +1,4 @@
-import Home from './ass.html'
+import Home from './components/Home.html'
 
 export default [
   {
