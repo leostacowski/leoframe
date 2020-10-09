@@ -1,3 +1,5 @@
+import Render from '../render/render'
+
 /**
  * Representa o framework e executa a função init.
  * @module Leo
@@ -12,6 +14,7 @@ export default class Leo {
   constructor({ id, router }) {
     this.id = id
     this.router = router
+    this.render = undefined
     this.rootElement = undefined
     this.activeComponent = undefined
 
@@ -19,7 +22,7 @@ export default class Leo {
   }
 
   /**
-   * Inicializa rootElement e handler dos eventos do Router.
+   * Inicializa  rootElement, handler dos eventos do Router e o Render.
    * @function init
    * @returns {undefined}
    */
@@ -27,8 +30,22 @@ export default class Leo {
     try {
       this.setRootElement()
       this.setRouterListenersHandlers()
+      this.setRender()
     } catch (err) {
       console.error(`@init: ${err}`)
+    }
+  }
+
+  /**
+   * Inicializa o módulo do Render.
+   * @function setRender
+   * @returns {undefined}
+   */
+  setRender() {
+    try {
+      this.render = new Render({ rootElement: this.rootElement })
+    } catch (err) {
+      console.error(`@setRender: ${err}`)
     }
   }
 
@@ -76,7 +93,7 @@ export default class Leo {
   /**
    * Atribui na variável activeComponent um componente por nome ou objeto.
    * @function setActiveComponent
-   * @param targetComponent {String | Object} target - Nome ou objeto do componente.
+   * @param targetComponent {String | Object} targetComponent - Nome ou objeto do componente.
    * @returns {boolean}
    */
   setActiveComponent(targetComponent) {
@@ -92,5 +109,7 @@ export default class Leo {
     }
   }
 
-  renderComponent(targetComponent) {}
+  renderComponent(targetComponent, element) {
+    this.render.renderComponentOnElement(targetComponent)
+  }
 }
