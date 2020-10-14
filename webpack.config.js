@@ -8,6 +8,7 @@ module.exports = {
     rules: [
       {
         test: /\.html$/i,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'html-loader',
@@ -20,9 +21,23 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', { modules: 'commonjs' }]],
+              plugins: [
+                [
+                  '@babel/plugin-transform-runtime',
+                  {
+                    regenerator: true,
+                  },
+                ],
+                ['add-module-exports'],
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,

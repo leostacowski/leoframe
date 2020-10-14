@@ -5,16 +5,27 @@
 
   <a href="/#/static">Estático</a>
   <a href="/#/reactive">Reativo</a>
+
+  <p>what</p>
 </template>
 
-<!-- 
 <script>
-  // export default {
-  //   data: {
-  //     haha: 'haha',
-  //   },
-  //   functions: {
-  //     funcao() {},
-  //   },
-  // }
-</script> -->
+  export let component = (self) => {
+    return {
+      data: {
+        haha: 'haha',
+      },
+      functions: {
+        funcao() {
+          console.log(leo)
+        },
+      },
+    }
+  }
+</script>
+
+<style>
+  h1 {
+    color: green;
+  }
+</style>

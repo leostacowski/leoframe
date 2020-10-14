@@ -37,7 +37,7 @@ export default class Router {
     try {
       return location.hash.slice(1).toLowerCase() || '/'
     } catch (err) {
-      console.error(`@getCurrentRoutePath: ${err}`)
+      throw `@getCurrentRoutePath: ${err}`
     }
 
     return '/'
@@ -59,7 +59,7 @@ export default class Router {
 
       return targetComponent
     } catch (err) {
-      console.error(`@getComponentByPath: ${err}`)
+      throw `@getComponentByPath: ${err}`
     }
   }
 
@@ -79,7 +79,7 @@ export default class Router {
 
       return targetComponent
     } catch (err) {
-      console.error(`@getComponentByName: ${err}`)
+      throw `@getComponentByName: ${err}`
     }
   }
 
@@ -100,7 +100,7 @@ export default class Router {
 
         callback(targetComponent)
       } catch (err) {
-        console.error(`@onRouteChange: ${err}`)
+        throw `@onRouteChange: ${err}`
       }
     }
   }
@@ -122,7 +122,7 @@ export default class Router {
 
         callback(targetComponent)
       } catch (err) {
-        console.error(`@onFirstLoad: ${err}`)
+        throw `@onFirstLoad: ${err}`
       }
     }
   }
