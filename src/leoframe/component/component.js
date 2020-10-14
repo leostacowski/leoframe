@@ -36,15 +36,11 @@ export default class Component {
     const rawJSCode = this.rawScript.innerHTML
     const transpiled = this.getTranspiledJSFromRawCode(rawJSCode)
 
-    class t {
-      constructor({ data, functions }) {
-        this.data = data
-        this.functions = functions
-      }
-    }
+    const Component = eval(transpiled)
 
-    const component = eval(transpiled)
-    this.scriptModel = component(new t({ ...component() }))
+    this.scriptModel = new Component()
+
+    this.scriptModel.funcao()
   }
 
   getTranspiledJSFromRawCode(rawJSCode) {

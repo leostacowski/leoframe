@@ -10,16 +10,19 @@
 </template>
 
 <script>
-  export let component = (self) => {
-    return {
-      data: {
-        haha: 'haha',
-      },
-      functions: {
-        funcao() {
-          console.log(leo)
-        },
-      },
+  export class Component {
+    constructor() {
+      this.haha = 'haha'
+    }
+
+    funcao() {
+      console.log('funcao 1')
+
+      this.funcao2()
+    }
+
+    funcao2() {
+      console.log('funcao 2')
     }
   }
 </script>
