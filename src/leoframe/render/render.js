@@ -1,4 +1,3 @@
-import { transform } from '@babel/standalone'
 import Script from '../component/script'
 
 /**
@@ -83,8 +82,7 @@ export default class Render {
   setVirtualScript() {
     try {
       const rawJSCode = this.targetComponent.rawScript.innerHTML
-      const transpiled = this.getTranspiledJSFromRawCode(rawJSCode)
-      const ComponentScript = eval(transpiled)
+      const ComponentScript = eval(`(()=>${rawJSCode})()`)
 
       this.targetComponent.virtualScript = new Script(ComponentScript)
     } catch (err) {
@@ -111,24 +109,6 @@ export default class Render {
    */
   onVirtualScriptChange() {
     console.log('script mudou!')
-  }
-
-  /**
-   * Retorna código Javascript transpilado para uma versão compilável pelo navegador usando o @Babel/standalone.
-   * @function getTranspiledJSFromRawCode
-   * @param rawJSCode {String} rawJSCode - Código transpilado para versão compilável pelo navegador.
-   * @returns {String}
-   */
-  getTranspiledJSFromRawCode(rawJSCode) {
-    try {
-      const transpiled = transform(rawJSCode, {
-        presets: ['env'],
-      })
-
-      return transpiled.code
-    } catch (err) {
-      console.error(`@getTranspiledJSFromRawCode: ${err}`)
-    }
   }
 
   /**
