@@ -16,13 +16,14 @@
     }
 
     funcao() {
-      console.log('funcao 1')
+      // console.log('funcao 1', this)
 
       this.funcao2()
     }
 
     funcao2() {
-      console.log('funcao 2')
+      setInterval(() => (this.haha = Math.random()), 1500)
+      // console.log('funcao 2', this)
     }
   }
 </script>

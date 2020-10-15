@@ -4,15 +4,15 @@ import Script from '../component/script'
 /**
  * Representa o Render do framework.
  * @module Render
- * @property {HTMLElement} rootElement Elemento HTML raíz da SPA.
- * @property {Object} targetComponent Objeto literal contendo as propriedades de um componente a ser renderizado.
- * @property {HTMLElement} targetComponent.originalComponent Elemento HTML do componente a ser renderizado.
- * @property {HTMLElement} targetComponent.formattedComponent Elemento HTML formatado do componente renderizado.
- * @property {HTMLElement} targetComponent.rawTemplate Elemento HTML TEMPLATE do componente.
- * @property {HTMLElement} targetComponent.rawScript Elemento HTML SCRIPT do componente.
- * @property {HTMLElement} targetComponent.rawStyle Elemento HTML STYLE do componente.
- * @property {Object} targetComponent.virtualTemplate Objeto com a instância virtual do TEMPLATE.
- * @property {Object} targetComponent.virtualScript Objeto com a instância virtual do SCRIPT.
+ * @param rootElement {HTMLElement} rootElement - Elemento HTML raíz da SPA.
+ * @property {Object} targetComponent - Objeto literal contendo as propriedades de um componente a ser renderizado.
+ * @property {HTMLElement} targetComponent.originalComponent - Elemento HTML do componente a ser renderizado.
+ * @property {HTMLElement} targetComponent.formattedComponent - Elemento HTML formatado do componente renderizado.
+ * @property {HTMLElement} targetComponent.rawTemplate - Elemento HTML TEMPLATE do componente.
+ * @property {HTMLElement} targetComponent.rawScript - Elemento HTML SCRIPT do componente.
+ * @property {HTMLElement} targetComponent.rawStyle - Elemento HTML STYLE do componente.
+ * @property {Object} targetComponent.virtualTemplate - Objeto com a instância virtual do TEMPLATE.
+ * @property {Object} targetComponent.virtualScript - Objeto com a instância virtual do SCRIPT.
  */
 export default class Render {
   constructor({ rootElement }) {
@@ -69,7 +69,10 @@ export default class Render {
    * @returns {undefined}
    */
   setTargetComponentVirtualProperties() {
-    if (this.targetComponent.rawScript) this.setVirtualScript()
+    if (this.targetComponent.rawScript) {
+      this.setVirtualScript()
+      this.setVirtualScriptListener()
+    }
   }
 
   /**
@@ -83,10 +86,31 @@ export default class Render {
       const transpiled = this.getTranspiledJSFromRawCode(rawJSCode)
       const ComponentScript = eval(transpiled)
 
-      this.targetComponent.virtualScript = new Script(new ComponentScript())
+      this.targetComponent.virtualScript = new Script(ComponentScript)
     } catch (err) {
       console.error(`@setVirtualScript: ${err}`)
     }
+  }
+
+  /**
+   * Cria os listeners de eventos da propriedade virtualScript do Objeto literal targetComponent.
+   * @function setVirtualScriptListener
+   * @returns {undefined}
+   */
+  setVirtualScriptListener() {
+    this.targetComponent.virtualScript.emitter.addListener(
+      'change',
+      this.onVirtualScriptChange
+    )
+  }
+
+  /**
+   * Cria o handler do evento "change" da propriedade virtualScript do Objeto literal targetComponent.
+   * @function onVirtualScriptChange
+   * @returns {undefined}
+   */
+  onVirtualScriptChange() {
+    console.log('script mudou!')
   }
 
   /**
