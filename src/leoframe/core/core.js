@@ -1,7 +1,7 @@
 import Render from '../render/render'
 
 /**
- * Representa o framework e executa a função init.
+ * Representa o Framework e executa a função init.
  * @module Leo
  * @param initProps {Object} initProps - Objeto literal contendo as propriedades id e router.
  * @property {Integer} id Identificador do elemento HTML raíz da SPA.
