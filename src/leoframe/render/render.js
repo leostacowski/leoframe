@@ -23,18 +23,55 @@ export default class Render {
       rawTemplate: undefined,
       rawScript: undefined,
       rawStyle: undefined,
-      virtualTemplate: undefined,
       virtualScript: undefined,
     }
   }
 
-  renderComponentOnElement(targetComponent, targetElement = this.rootElement) {
-    this.clearElement(targetElement)
+  /**
+   * Renderiza um Componente no rootElement caso receba o pârametro targetComponent ou atualiza os HTMLElements do rootElement baseados nos parâmetros virtuais.
+   * @function render
+   * @param targetComponent {Object | Undefined} targetComponent - Objeto literal contido nas rotas do Router.
+   * @returns {undefined}
+   */
+  render(targetComponent) {
+    this.clearElement()
 
-    this.setTargetComponent(targetComponent)
+    if (targetComponent) this.setTargetComponent(targetComponent)
+
+    this.updateRawTemplateBasedOnVirtualScript()
+
     this.setTargetComponentFormattedDocument()
 
-    targetElement.append(this.targetComponent.formattedComponent)
+    this.appendFormattedComponentOnRootElement()
+  }
+
+  /**
+   * Concatena a propriedade formattedComponent do Objeto literal targetComponent no rootElement.
+   * @function appendFormattedComponentOnRootElement
+   * @returns {undefined}
+   */
+  appendFormattedComponentOnRootElement() {
+    const formatted = this.targetComponent.formattedComponent.cloneNode(true)
+
+    this.rootElement.append(formatted)
+  }
+
+  /**
+   * Atualiza os HTMLElements da propriedade rawTemplate do Objeto literal targetComponent baseados nos dados contidos na variável virtualScript no Objeto literal targetComponent.
+   * @function updateRawTemplateBasedOnVirtualScript
+   * @returns {undefined}
+   */
+  updateRawTemplateBasedOnVirtualScript() {
+    const formatted = this.targetComponent.rawTemplate.content
+    const reactiveElements = formatted.querySelectorAll('[leo-data]')
+
+    reactiveElements.forEach((element) => {
+      const propertyName = element.attributes['leo-data'].value
+      const instance = this.targetComponent.virtualScript.instance
+      const virtualValue = instance[propertyName]
+
+      element.innerHTML = virtualValue
+    })
   }
 
   /**
@@ -76,13 +113,13 @@ export default class Render {
 
   /**
    * Povoa a propriedade virtualScript do Objeto literal targetComponent com uma instância da classe Script a partir da propriedade HTMLElement rawScript do Objeto literal targetComponent.
-   * @function setTargetComponentVirtualProperties
+   * @function setVirtualScript
    * @returns {undefined}
    */
   setVirtualScript() {
     try {
       const rawJSCode = this.targetComponent.rawScript.innerHTML
-      const ComponentScript = eval(`(()=>${rawJSCode})()`)
+      const ComponentScript = eval(rawJSCode)
 
       this.targetComponent.virtualScript = new Script(ComponentScript)
     } catch (err) {
@@ -96,9 +133,10 @@ export default class Render {
    * @returns {undefined}
    */
   setVirtualScriptListener() {
-    this.targetComponent.virtualScript.emitter.addListener(
-      'change',
-      this.onVirtualScriptChange
+    const self = this
+
+    this.targetComponent.virtualScript.emitter.addListener('change', () =>
+      self.onVirtualScriptChange()
     )
   }
 
@@ -108,7 +146,7 @@ export default class Render {
    * @returns {undefined}
    */
   onVirtualScriptChange() {
-    console.log('script mudou!')
+    this.render()
   }
 
   /**
@@ -131,7 +169,7 @@ export default class Render {
       let style = documentFragment.querySelector('style')
 
       this.targetComponent.originalComponent = documentFragment
-      this.targetComponent.rawTemplate = template ? template.content : undefined
+      this.targetComponent.rawTemplate = template ? template : undefined
       this.targetComponent.rawScript = script ? script : undefined
       this.targetComponent.rawStyle = style ? style : undefined
     } catch (err) {
@@ -146,13 +184,15 @@ export default class Render {
    */
   setTargetComponentFormattedDocument() {
     try {
+      const rawTemplate = this.targetComponent.rawTemplate
+      const rawStyle = this.targetComponent.rawStyle
+
       let newFormattedComponent = document.createDocumentFragment()
 
-      if (this.targetComponent.rawTemplate)
-        newFormattedComponent.append(this.targetComponent.rawTemplate)
+      if (rawTemplate)
+        newFormattedComponent.append(rawTemplate.content.cloneNode(true))
 
-      if (this.targetComponent.rawStyle)
-        newFormattedComponent.append(this.targetComponent.rawStyle)
+      if (rawStyle) newFormattedComponent.append(rawStyle.cloneNode(true))
 
       this.targetComponent.formattedComponent = newFormattedComponent
     } catch (err) {
@@ -212,5 +252,15 @@ export default class Render {
 
       return false
     }
+  }
+
+  /**
+   * Envia a propriedade virtualScript do Objeto literal targetComponent o sinal para a sua finalização.
+   * @function finishTargetComponent
+   * @returns {undefined}
+   */
+  finishTargetComponent() {
+    if (this.targetComponent.virtualScript)
+      this.targetComponent.virtualScript.onFinish()
   }
 }

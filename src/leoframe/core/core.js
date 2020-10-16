@@ -73,8 +73,8 @@ export default class Leo {
 
     this.router.onFirstLoad((targetComponent) => {
       try {
-        self.renderComponent(targetComponent)
         self.setActiveComponent(targetComponent)
+        self.renderComponent(self.activeComponent)
       } catch (err) {
         console.error(`@onFirstLoadListenerHandler: ${err}`)
       }
@@ -82,8 +82,9 @@ export default class Leo {
 
     this.router.onRouteChange((targetComponent) => {
       try {
-        self.renderComponent(targetComponent)
+        self.finishActiveComponent()
         self.setActiveComponent(targetComponent)
+        self.renderComponent(self.activeComponent)
       } catch (err) {
         console.error(`@onRouteChangeListenerHandler: ${err}`)
       }
@@ -109,7 +110,22 @@ export default class Leo {
     }
   }
 
-  renderComponent(targetComponent, element) {
-    this.render.renderComponentOnElement(targetComponent)
+  /**
+   * Envia ao Render o componente para a renderização.
+   * @function renderComponent
+   * @param targetComponent {Object} targetComponent - Objeto do componente.
+   * @returns {undefined}
+   */
+  renderComponent(targetComponent) {
+    this.render.render(targetComponent)
+  }
+
+  /**
+   * Envia ao Render o sinal para finalizar o activeComponent.
+   * @function finishActiveComponent
+   * @returns {undefined}
+   */
+  finishActiveComponent() {
+    if (this.activeComponent) this.render.finishTargetComponent()
   }
 }

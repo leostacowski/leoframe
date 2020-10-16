@@ -6,24 +6,27 @@
   <a href="/#/static">Estático</a>
   <a href="/#/reactive">Reativo</a>
 
-  <p>what</p>
+  <p leo-data="haha"></p>
 </template>
 
 <script>
-  class Script {
+  module.exports = class Script {
     constructor() {
-      this.haha = 'haha'
+      this.haha = 'hihi'
+    }
+
+    onStart() {
+      this.funcao()
     }
 
     funcao() {
-      // console.log('funcao 1', this)
-
       this.funcao2()
     }
 
     funcao2() {
-      setInterval(() => (this.haha = Math.random()), 1500)
-      // console.log('funcao 2', this)
+      setInterval(() => {
+        this.haha = Math.random()
+      }, 1500)
     }
   }
 </script>
