@@ -1,12 +1,16 @@
 <template>
-  <h1>Home</h1>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper grey darken-2">
+        <a class="brand-logo left" href="/#/">leoframe</a>
 
-  <h2>Teste home</h2>
-
-  <a href="/#/static">Estático</a>
-  <a href="/#/reactive">Reativo</a>
-
-  <p leo-data="haha"></p>
+        <ul class="right">
+          <li><a href="/#/exemplo-1">Exemplo 1</a></li>
+          <li><a href="/#/exemplo-2">Exemplo 2</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -24,9 +28,9 @@
     }
 
     funcao2() {
-      setInterval(() => {
-        this.haha = Math.random()
-      }, 1500)
+      // setInterval(() => {
+      //   this.haha = Math.random()
+      // }, 1500)
     }
   }
 </script>

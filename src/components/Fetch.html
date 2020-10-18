@@ -1,0 +1,179 @@
+<template>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper grey darken-2">
+        <a class="brand-logo left" href="/#/">leoframe</a>
+
+        <ul class="right">
+          <li><a href="/#/exemplo-1">Exemplo 1</a></li>
+          <li><a href="/#/exemplo-2">Exemplo 2</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <section class="cards-container">
+    <div class="card orange">
+      <div class="card-image">
+        <div leo-data="image1"></div>
+      </div>
+      <div class="card-content">
+        <ul>
+          <li><span leo-data="fullName1"></span>.</li>
+          <li>
+            <span leo-data="age1"></span>
+            <span>anos.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-image">
+        <div leo-data="image2"></div>
+      </div>
+      <div class="card-content">
+        <ul>
+          <li><span leo-data="fullName2"></span>.</li>
+          <li>
+            <span leo-data="age2"></span>
+            <span>anos.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-image">
+        <div leo-data="image3"></div>
+      </div>
+      <div class="card-content">
+        <ul>
+          <li><span leo-data="fullName3"></span>.</li>
+          <li>
+            <span leo-data="age3"></span>
+            <span>anos.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-image">
+        <div leo-data="image4"></div>
+      </div>
+      <div class="card-content">
+        <ul>
+          <li><span leo-data="fullName4"></span>.</li>
+          <li>
+            <span leo-data="age4"></span>
+            <span>anos.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+  module.exports = class Script {
+    constructor() {
+      this.interval = undefined
+
+      this.image1 = undefined
+      this.fullName1 = undefined
+      this.age1 = undefined
+
+      this.image2 = undefined
+      this.fullName2 = undefined
+      this.age2 = undefined
+
+      this.image3 = undefined
+      this.fullName3 = undefined
+      this.age3 = undefined
+
+      this.image4 = undefined
+      this.fullName4 = undefined
+      this.age4 = undefined
+    }
+
+    onStart() {
+      this.loadRandomPeople()
+      this.keepLoadingRandomPeople()
+    }
+
+    onFinish() {
+      clearInterval(this.interval)
+    }
+
+    keepLoadingRandomPeople() {
+      this.interval = setInterval(() => {
+        this.loadRandomPeople()
+      }, 2000)
+    }
+
+    async loadRandomPeople() {
+      const randomPeople = await this.getRandomPeople()
+      if (randomPeople) this.setRandomPeople(randomPeople)
+    }
+
+    setRandomPeople(randomPeople) {
+      const p1 = randomPeople[0]
+      this.image1 = `<img src="${p1.picture.large}">`
+      this.fullName1 = `${p1.name.first} ${p1.name.last}`
+      this.age1 = p1.dob.age
+
+      const p2 = randomPeople[1]
+      this.image2 = `<img src="${p2.picture.large}">`
+      this.fullName2 = `${p2.name.first} ${p2.name.last}`
+      this.age2 = p2.dob.age
+
+      const p3 = randomPeople[2]
+      this.image3 = `<img src="${p3.picture.large}">`
+      this.fullName3 = `${p3.name.first} ${p3.name.last}`
+      this.age3 = p3.dob.age
+
+      const p4 = randomPeople[3]
+      this.image4 = `<img src="${p4.picture.large}">`
+      this.fullName4 = `${p4.name.first} ${p4.name.last}`
+      this.age4 = p4.dob.age
+    }
+
+    async getRandomPeople() {
+      return fetch('https://randomuser.me/api/?results=4')
+        .then((response) => response.json())
+        .then((data) => data.results)
+        .catch((err) => {
+          this.loadRandomPeople()
+          return undefined
+        })
+    }
+  }
+</script>
+
+<style>
+  .cards-container {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(100px, 200px));
+    column-gap: 1rem;
+    row-gap: 1rem;
+    justify-content: center;
+  }
+
+  .card-content {
+    padding: 0.5rem !important;
+    overflow: hidden;
+    word-break: break-all;
+    line-height: 90%;
+    font-weight: 600;
+  }
+
+  .card {
+    margin: 0px;
+  }
+
+  .card-image img {
+    object-fit: cover;
+  }
+</style>

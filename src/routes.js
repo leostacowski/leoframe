@@ -1,6 +1,6 @@
 import Home from './components/Home.html'
-import Reactive from './components/Reactive.html'
-import Static from './components/Static.html'
+import Math from './components/Math.html'
+import Fetch from './components/Fetch.html'
 
 export default [
   {
@@ -10,14 +10,14 @@ export default [
   },
 
   {
-    path: '/reactive',
-    name: 'Reactive',
-    component: Reactive,
+    path: '/exemplo-1',
+    name: 'Math',
+    component: Math,
   },
 
   {
-    path: '/static',
-    name: 'Static',
-    component: Static,
+    path: '/exemplo-2',
+    name: 'Fetch',
+    component: Fetch,
   },
 ]
