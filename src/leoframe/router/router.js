@@ -39,8 +39,6 @@ export default class Router {
     } catch (err) {
       throw `@getCurrentRoutePath: ${err}`
     }
-
-    return '/'
   }
 
   /**

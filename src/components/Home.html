@@ -11,32 +11,76 @@
       </div>
     </nav>
   </div>
+
+  <section>
+    <div class="card horizontal teal darken-1">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span leo-data="component"></span>
+        </div>
+      </div>
+    </div>
+
+    <span>+</span>
+
+    <div class="card horizontal lime darken-1">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span leo-data="router"></span>
+        </div>
+      </div>
+    </div>
+
+    <span>+</span>
+
+    <div class="card horizontal brown darken-1">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span leo-data="render"></span>
+        </div>
+      </div>
+    </div>
+
+    <span>=</span>
+
+    <div class="card horizontal red darken-1">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span leo-data="spa"></span>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
   module.exports = class Script {
     constructor() {
-      this.haha = 'hihi'
-    }
-
-    onStart() {
-      this.funcao()
-    }
-
-    funcao() {
-      this.funcao2()
-    }
-
-    funcao2() {
-      // setInterval(() => {
-      //   this.haha = Math.random()
-      // }, 1500)
+      this.component = 'Componente'
+      this.router = 'Router'
+      this.render = 'Render'
+      this.spa = 'SPA'
     }
   }
 </script>
 
 <style>
-  h1 {
-    color: green;
+  section {
+    display: grid;
+    text-align: center;
+    margin-top: 4vh;
+  }
+
+  span {
+    font-size: 2rem;
+  }
+
+  .card {
+    margin: 0px 5vw 0px 5vw;
+  }
+
+  .card-content {
+    color: white;
+    font-size: 1.5rem;
   }
 </style>
