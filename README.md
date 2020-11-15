@@ -4,13 +4,13 @@ leoframe é um framework de front-end expansivo para criar SPAs para a web.
 
 ## Obtenção do template
 
-Faça um clone do repósitório e use do template básico.
+Faça um clone do repósitório e torne o template básico seu!
 
 ```bash
 git clone https://github.com/leostacowski/leoframe
 ```
 
-## Utilização
+## Instalação de dependências
 
 Instale as dependências do projeto e comece a desvendar!
 
@@ -24,6 +24,8 @@ ou
 npm install
 ```
 
+## Desenvolvimento com dev-server
+
 Inicie o dev-server do Webpack para ver suas alterações em tempo real.
 
 ```bash
@@ -36,7 +38,9 @@ ou
 npm serve
 ```
 
-Faça uma build do projeto e documentação.
+## Gerando uma build com Webpack
+
+Gere uma build do projeto e documentação.
 
 ```bash
 yarn build
@@ -48,15 +52,22 @@ ou
 npm build
 ```
 
+- O bundle irá para a pasta dist, a documentação irá para a pasta jsdoc. 👍
+- A pasta docs só é necessária caso queira usar o github pages. 📓
+
+## Documentação do projeto
+
+[Documentação](https://leostacowski.github.io/leoframe/index.html) (gerada com [JSDoc](https://jsdoc.app/)).
+
+## Repositório do projeto
+
+[Repositório](https://github.com/leostacowski/leoframe) (um fork que tal? 🍴).
+
 ## Considerações
 
-Ao gerar uma build, o resultado irá para a pasta dist, a documentação irá para a pasta jsdoc. 👍
+- Requisições de pull são todas bem vindas, este é um projeto de conclusão de curso. 🎓
 
-A pasta docs só é necessária caso queira usar o github pages. 📓
-
-Requisições de pull são todas bem vindas, pois este é um projeto de conclusão de curso. 🎓
-
-Qualquer issue reportado será analisado com todo o carinho. 🧐
+- Qualquer issue reportado será analisado com todo o carinho. 🧐
 
 ## Licença
 
