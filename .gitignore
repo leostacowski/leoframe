@@ -6,6 +6,9 @@ node_modules
 # webpack dist folder
 dist
 
+# jsdoc output folder
+jsdoc
+
 # local env files
 .env.local
 .env.*.local

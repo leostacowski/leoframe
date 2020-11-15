@@ -7,9 +7,9 @@
   "opts": {
     "encoding": "utf8",
     "package": "./package.json",
-    "readme": "./README.md",
-    "destination": "./docs/",
+    "destination": "./jsdoc/",
     "recurse": true,
-    "verbose": true
+    "verbose": true,
+    "readme": "./README.md"
   }
 }
