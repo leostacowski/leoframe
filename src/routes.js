@@ -20,4 +20,17 @@ export default [
     name: 'Fetch',
     component: Fetch,
   },
+
+  {
+    path: '/exemplo-prop',
+    name: 'Fetch',
+    component: Fetch,
+    params: [
+      {
+        name: 'propriedade',
+        type: String,
+        required: true,
+      },
+    ],
+  },
 ]

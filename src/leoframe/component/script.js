@@ -15,11 +15,21 @@ export default class Script {
     this.onStart()
   }
 
+  /**
+   * Executa a função de inicialização opcional onStart na instância de Proxy.
+   * @function onStart
+   * @returns {undefined}
+   */
   onStart() {
     if (this.instance.onStart && typeof this.instance.onStart === 'function')
       this.instance.onStart()
   }
 
+  /**
+   * Executa a função de finalização opcional onFinish na instância de Proxy.
+   * @function onFinish
+   * @returns {undefined}
+   */
   onFinish() {
     if (this.instance.onFinish && typeof this.instance.onFinish === 'function')
       this.instance.onFinish()
