@@ -53,6 +53,8 @@ export default class Render {
   appendFormattedComponentOnRootElement() {
     const formatted = this.targetComponent.formattedComponent.cloneNode(true)
 
+    this.addListeners(formatted)
+
     this.rootElement.append(formatted)
   }
 
@@ -66,11 +68,31 @@ export default class Render {
     const reactiveElements = formatted.querySelectorAll('[leo-data]')
 
     reactiveElements.forEach((element) => {
-      const propertyName = element.attributes['leo-data'].value
-      const instance = this.targetComponent.virtualScript.instance
-      const virtualValue = instance[propertyName]
+      if (element.attributes['leo-data']) {
+        const propertyName = element.attributes['leo-data'].value
+        const instance = this.targetComponent.virtualScript.instance
+        const virtualValue = instance[propertyName]
 
-      element.innerHTML = virtualValue
+        element.innerHTML = virtualValue
+      }
+    })
+  }
+
+  addListeners(target) {
+    const reactiveElements = target.querySelectorAll('[leo-func]')
+
+    reactiveElements.forEach((element) => {
+      const onClickFunc = (e) => {
+        e.preventDefault()
+
+        const funcName = element.attributes['leo-func'].value
+        const instance = this.targetComponent.virtualScript.instance
+        const virtualValue = instance[funcName]
+
+        if (typeof virtualValue === 'function') virtualValue(instance)
+      }
+
+      element.onclick = onClickFunc
     })
   }
 

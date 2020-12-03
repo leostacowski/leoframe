@@ -16,40 +16,10 @@
   </div>
 
   <section>
-    <div class="card horizontal teal darken-1">
+    <div class="card horizontal green darken-1">
       <div class="card-stacked">
         <div class="card-content">
           <span leo-data="component"></span>
-        </div>
-      </div>
-    </div>
-
-    <span>+</span>
-
-    <div class="card horizontal lime darken-1">
-      <div class="card-stacked">
-        <div class="card-content">
-          <span leo-data="router"></span>
-        </div>
-      </div>
-    </div>
-
-    <span>+</span>
-
-    <div class="card horizontal brown darken-1">
-      <div class="card-stacked">
-        <div class="card-content">
-          <span leo-data="render"></span>
-        </div>
-      </div>
-    </div>
-
-    <span>=</span>
-
-    <div class="card horizontal red darken-1">
-      <div class="card-stacked">
-        <div class="card-content">
-          <span leo-data="spa"></span>
         </div>
       </div>
     </div>
@@ -57,12 +27,26 @@
 </template>
 
 <script>
+  function depende() {
+    const opts = [
+      'Dependência 1',
+      'Dependência 2',
+      'Dependência 3',
+      'Dependência 4',
+      'Dependência 5',
+      'Dependência 6',
+      'Dependência 7',
+      'Dependência 8',
+      'Dependência 9',
+      'Dependência 10',
+    ]
+
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+
   module.exports = class Script {
     constructor() {
-      this.component = 'Componente'
-      this.router = 'Router'
-      this.render = 'Render'
-      this.spa = 'SPA'
+      this.component = depende()
     }
   }
 </script>

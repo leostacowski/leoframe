@@ -1,6 +1,8 @@
 import Home from './components/Home.html'
-import Math from './components/Math.html'
-import Fetch from './components/Fetch.html'
+import ComponentA from './components/ComponentA.html'
+import ComponentB from './components/ComponentB.html'
+import DepInjection from './components/DependencyInjection.html'
+import TwoWayDataBinding from './components/TwoWayDataBinding.html'
 
 export default [
   {
@@ -10,27 +12,26 @@ export default [
   },
 
   {
-    path: '/exemplo-1',
-    name: 'Math',
-    component: Math,
+    path: '/componente-a',
+    name: 'ComponentA',
+    component: ComponentA,
   },
 
   {
-    path: '/exemplo-2',
-    name: 'Fetch',
-    component: Fetch,
+    path: '/componente-b',
+    name: 'ComponentB',
+    component: ComponentB,
   },
 
   {
-    path: '/exemplo-prop',
-    name: 'Fetch',
-    component: Fetch,
-    params: [
-      {
-        name: 'propriedade',
-        type: String,
-        required: true,
-      },
-    ],
+    path: '/injecao-de-dependencias',
+    name: 'DepInjection',
+    component: DepInjection,
+  },
+
+  {
+    path: '/two-way-data-binding',
+    name: 'TwoWayDataBinding',
+    component: TwoWayDataBinding,
   },
 ]

@@ -1,0 +1,132 @@
+<template>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper grey darken-2">
+        <a class="brand-logo left" href="/#/">leoframe</a>
+
+        <ul class="right">
+          <li><a href="/#/componente-a">Comp A</a></li>
+          <li><a href="/#/componente-b">Comp B</a></li>
+          <li><a href="/#/injecao-de-dependencias">Injeção</a></li>
+          <li><a href="/#/two-way-data-binding">Two-Way-Data-Binding</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  </div>
+
+  <div class="card-containers">
+    <div class="top">
+      <div class="card horizontal" style="margin-right: 2%">
+        <div class="card-stacked">
+          <span class="card-title">Interface</span>
+          <div
+            class="card-content"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+            "
+          >
+            <a
+              class="botao-adicao waves-effect waves-light btn red"
+              leo-func="userSum"
+              >Adicionar</a
+            >
+            <p leo-data="userCount"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card horizontal">
+        <div class="card-stacked">
+          <span class="card-title">Lógica</span>
+          <div
+            class="card-content"
+            style="display: flex; align-items: center; justify-content: center"
+          >
+            <p leo-data="botCount"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <span class="card-title">Ligação Bidirecional</span>
+        <div
+          class="card-content"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <p leo-data="totalSum"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  module.exports = class Script {
+    constructor() {
+      this.interval = undefined
+
+      this.botCount = 0
+      this.userCount = 0
+      this.totalSum = 0
+    }
+
+    onStart() {
+      this.interval = setInterval(() => this.botSum(), 2000)
+    }
+
+    onFinish() {
+      clearInterval(this.interval)
+    }
+
+    userSum(self = this) {
+      self.userCount++
+
+      self.setTotalSum(self)
+    }
+
+    botSum() {
+      this.botCount++
+
+      this.setTotalSum()
+    }
+
+    setTotalSum(self = this) {
+      self.totalSum = self.userCount + self.botCount
+    }
+  }
+</script>
+
+<style>
+  .card-containers {
+    display: flex;
+    flex-flow: column;
+    max-width: 80%;
+    margin-left: 8%;
+    margin-top: 8%;
+  }
+
+  .card-containers .top {
+    display: flex;
+  }
+
+  .card-containers .top .card {
+    width: 50%;
+  }
+
+  .card-content {
+    padding: 1rem !important;
+  }
+
+  .card-title {
+    margin-left: 1rem;
+  }
+
+  p {
+    font-size: 200%;
+  }
+</style>
